@@ -2,8 +2,11 @@
 
 namespace App;
 
+use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Contracts\Auth\CanResetPassword;
+use Auth;
 
 class User extends Authenticatable
 {
@@ -26,4 +29,23 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+//    public function is_admin()
+//    {
+//        $role = $this->role;
+//        if($role == '1')
+//        {
+//            return true;
+//        }
+//        return false;
+//    }
+    public function isAdmin()
+    {
+        $user = Auth::user();
+        $role = $user->role;
+        if ($role == 0) {
+           return false;
+        } else {
+            return true;
+        }
+    }
 }
