@@ -23,6 +23,7 @@ class News extends Migration
             $table->text('body');
             $table->string('img')->unique();
             $table->string('file')->unique();
+            $table->string('slug')->unique();
             $table->boolean('active');
             $table->timestamps();
    });
