@@ -14,11 +14,27 @@
 Route::get('/', function () {
     return view('welcome');
 });
-
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/admin', 'AdminController@index')->name('admin');
+Route::group(['middleware'=>['auth']], function (){
+    Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/users', 'UserController@index')->name('users');
+    Route::get('/users/edit/{id}', 'UserController@edit')->name('usersedit');
+    Route::get('/users/makeadmin', 'UserController@edit')->name('usersmakeadmin');
+    Route::get('/admin', 'AdminController@index')-> name('admin');
+});
+
+
+
+
+
+
+//Route::get('new-news', 'NewsController@create')->name('create');
+//Route::post('new-news', 'NewsController@store')->name('store');
+//Route::get('edit/{slug}', 'NewsController@edit')->name('edit');
+//Route::post('update', 'NewsController@update')->name('update');
+
+
 
 //    Route::prefix('admin')->group(function (){
 //        Route::get('/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');

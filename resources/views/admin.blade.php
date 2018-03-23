@@ -15,6 +15,9 @@
                     @endif
 
                     You are logged in as <strong>Admin</strong>!
+                        <a type="button" class="btn btn-primary" href="{{ url('/users') }}" >пользователи</a>
+
+
                 </div>
             </div>
         </div>

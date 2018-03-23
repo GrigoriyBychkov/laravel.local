@@ -48,4 +48,9 @@ class User extends Authenticatable
             return true;
         }
     }
+
+    public function news()
+    {
+        return $this->hasMany('App\News','author_id');
+    }
 }
