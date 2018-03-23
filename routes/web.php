@@ -19,11 +19,13 @@ Auth::routes();
 Route::group(['middleware'=>['auth']], function (){
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/users', 'UserController@index')->name('users');
-    Route::get('/users/edit/{id}', 'UserController@edit')->name('usersedit');
-    Route::get('/users/makeadmin', 'UserController@edit')->name('usersmakeadmin');
-    Route::get('/admin', 'AdminController@index')-> name('admin');
+    Route::get('/users/edit/{id}', 'UserController@edit')->name('users.edit');
+//    Route::get('/users/makeadmin', 'UserController@edit')->name('users.make.admin');
 });
+Route::get('/admin', 'AdminController@index')->middleware('admin')->name('admin');
+Route::patch('/users/edit/{id}', 'UserController@edit');
 
+//Route::patch('/users/edit/{id}','UserController@update')->middleware('admin')->name('update');
 
 
 
