@@ -4,6 +4,8 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
+            @include('layouts.adminmenu')
+
             <div class="panel panel-default">
                 <div class="panel-heading">ADMIN Dashboard</div>
 
@@ -15,7 +17,6 @@
                     @endif
 
                     You are logged in as <strong>Admin</strong>!
-                        <a type="button" class="btn btn-primary" href="{{ url('/users') }}" >пользователи</a>
 
 
                 </div>

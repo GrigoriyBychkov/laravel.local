@@ -20,22 +20,26 @@ class UserController extends Controller
 
     public function edit(Request $request, $id){
         $user = User::find($id);
-        var_dump($request->input('name'));
-//        $this->validate(request(), [
-//                'name'=>'required',
-//                'email'=>'required|email|unique:users',
-//                'password'=>'required|min:6|confirmed'
-//            ]);
-//
-        if (request('email')) {
+
+        if (request('name')) {
+
+
+            $this->validate(request(), [
+                'name'=>'required',
+                'email'=>'required|email'
+            ]);
             $user->email = request('email');
+            $user->name = request('name');
+            $user->role = request('role');
+
+            if (strlen(request('password')) > 0) {
+                $user->password = bcrypt(request('password'));
+            }
+
             $user->save();
+
+            return redirect()->back()->with('success', 'The user has updated');
         }
-//        $user->name = request('name');
-
-//        $user->password = bcrypt(request('password'));
-//
-
 
         return view('usersedit', array('id' => $user, 'user' => $user));
 

@@ -1,59 +1,53 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
+Вводная информация
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+1.	Результатом выполнения заданий должна быть система интернет-магазин, состоящая из клиентской и административной частей. 
+2.	Функционал должен быть разбит на самостоятельные и независимые логически обособленные части - модули, зависящие только от базового функционала системы.
+3.	Возможности пользователей системы определяются ролями. Всего в системе существует две роли - admin и customer. Где admin - администратор системы, имеющий доступ как к клиентской, так и к административной её части. Customer - покупатель, имеющий доступ только к клиентской части системы.
+4.	Работа над заданиями проводится с использованием системы внутреннего учета потраченного времени “Anixon tracker”.
 
-## About Laravel
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
+Требования к выполнению заданий
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+1.	Для выполнения заданий не допускается использование готовых решений.
+2.	Обязательным является использование системы контроля версий Git.
+3.	Все пояснения, комментарии и прочие тексты должны быть выполнены на английском языке.
+4.	Код должен соответствовать стандарту PSR-2 (https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md), а так же Code Style используемого фреймворка.
+5.	Обязательным является использование фронтенд-фреймворка Bootstrap.
+6.	Плюсом будет наличие в коде PHPDoc ( https://ru.wikipedia.org/wiki/PHPDoc ) блоков.
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications.
+Задачи
 
-## Learning Laravel
+1.	Разработка базового модуля административной и клиентской части, включающего в себя:
+a.	-Проектирование базовой структуры базы данных.
+b.	-Функционал авторизации пользователей системы (после авторизации пользователи с ролью admin и customer должны быть перенаправлены на административную и клиентскую части соответственно).
+c.	Функционал создания/редактирования/удаления администраторов системы, включая генерацию/хэширование пароля.
+d.	-Функционал регистрации пользователя (пользователи с ролью customer).
+g.	В административной части - функционал создания/редактирования/удаления|блокировки пользователей системы
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of any modern web application framework, making it a breeze to get started learning the framework.
+e.	Личный кабинет пользователя с возможностью редактирования данных, таких как изменение е-мэйла, личных данных.
+f.	Функционал восстановления|сброса пароля.
 
-If you're not in the mood to read, [Laracasts](https://laracasts.com) contains over 1100 video tutorials on a range of topics including Laravel, modern PHP, unit testing, JavaScript, and more. Boost the skill level of yourself and your entire team by digging into our comprehensive video library.
+2.	Разработка новостного модуля, включающего в себя:
+a.	Проектирование дополнительных таблиц и связей базы данных.
+b.	Функционал создания/редактирования/архивирования новостей в административной части. Новость должна включать в себя текст новости, возможность загрузки изображения, возможность загрузки приложенных файлов.
+c.	Функционал просмотра новостей в соответствующем разделе клиентской части, в том числе подсчет количества просмотров.
 
-## Laravel Sponsors
+3.	Разработка модуля товаров, включающего в себя:
+a.	Проектирование дополнительных таблиц и связей базы данных.
+b.	Функционал создания/редактирования/удаления категорий и подкатегорий в административной части.
+c.	Функционал создания/редактирования/удаления товара с привязкой товара к подкатегории в административной части.
+d.	Просмотр списка товаров подкатегории в клиентской части.
+e.	Просмотр товара в клиентской части.
+f.	Функционал корзины пользователя. Формирование заказа.
+g.	Просмотр заказов в административной части.
+h.	(Опционально) Онлайн оплата.
 
-We would like to extend our thanks to the following sponsors for helping fund on-going Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell):
+4.	Разработка модуля мессенджера (обратной связи), включающего в  себя:
+a.	Функционал отправки сообщений с помощью формы в соответствующем разделе клиентской части.
+b.	Функционал просмотра сообщений и отправки ответа в административной части.
+c.	Функционал отправки оповещений от администрации.
+d.	(Опционально) Функционал массовой рассылки сообщений.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Pulse Storm](http://www.pulsestorm.net/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
+5.	(Опционально) Парсер товаров:
+a.	Функционал добавления товаров с помощью форматированного файла (CSV, XML, Excel)
 
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-"# rh_study_shop" 
