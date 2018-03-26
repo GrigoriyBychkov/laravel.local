@@ -63,6 +63,17 @@
                                             {{ csrf_field() }}
                                         </form>
                                     </li>
+                                    <li>
+                                        <a href="{{ route('profile.index') }}">
+                                            Profile
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('change.password') }}">
+                                            Change Password
+                                        </a>
+                                    </li>
+
                                 </ul>
                             </li>
                         @endguest

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -10,6 +11,7 @@ use Auth;
 
 class User extends Authenticatable
 {
+    use SoftDeletes;
     use Notifiable;
 
     /**
@@ -38,6 +40,10 @@ class User extends Authenticatable
 //        }
 //        return false;
 //    }
+
+    protected $dates = ['deleted_at'];
+
+
     public function isAdmin()
     {
         $user = Auth::user();
