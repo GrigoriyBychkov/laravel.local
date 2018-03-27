@@ -21,18 +21,20 @@ Route::group(['middleware'=>['auth']], function (){
     Route::get('/users', 'UserController@index')->name('users');
     Route::get('/users/edit/{id}', 'UserController@edit')->name('users.edit');
 //    Route::get('/users/makeadmin', 'UserController@edit')->name('users.make.admin');
+    Route::get('/profile/changePassword','ProfileController@showChangePasswordForm')->name('change.password');
+    Route::post('/profile/changePassword','ProfileController@changePassword')->name('password.changed');
+    Route::get('/profile','ProfileController@index')->name('profile.index');
+    Route::post('/profile','ProfileController@profileUpdate')->name('profile.save');
 });
-Route::get('/admin', 'AdminController@index')->middleware('admin')->name('admin');
-Route::patch('/users/edit/{id}', 'UserController@edit');
-Route::get('/users/block/{id}', 'UserController@block');
-Route::get('/users/delete/{id}', 'UserController@delete');
-Route::get('/users/add', 'UserController@add');
-Route::post('/users/add', 'UserController@add');
-Route::get('/profile/changePassword','ProfileController@showChangePasswordForm')->name('change.password');
-Route::post('/profile/changePassword','ProfileController@changePassword')->name('password.changed');
-Route::get('/profile','ProfileController@index')->name('profile.index');
-Route::post('/profile','ProfileController@profileUpdate')->name('profile.save');
 
+Route::group(['middleware'=>['admin']], function (){
+    Route::patch('/users/edit/{id}', 'UserController@edit');
+    Route::get('/users/block/{id}', 'UserController@block');
+    Route::get('/admin', 'AdminController@index')->name('admin');
+    Route::get('/users/delete/{id}', 'UserController@delete');
+    Route::get('/users/add', 'UserController@add');
+    Route::post('/users/add', 'UserController@add');
+});
 
 
 
