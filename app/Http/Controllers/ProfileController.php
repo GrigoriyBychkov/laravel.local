@@ -50,11 +50,7 @@ class ProfileController extends Controller
 
     public function changePassword(Request $request){
         $user = Auth::user();
-//        $currentPasswordHash = $user->password;
         $newPasswordHash = bcrypt(request('password'));
-//        if($currentPasswordHash=$newPasswordHash){
-//
-//        }
         $user->password = $newPasswordHash;
         $this->validate(request(), [
             'password'=>'required',

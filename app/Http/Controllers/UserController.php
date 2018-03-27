@@ -12,9 +12,6 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 
 class UserController extends Controller
 {
-//    public function show($id){
-//        return view('user.profile', ['user' => User::findOrFail($id)]);
-//    }
     use RegistersUsers;
 
     public function index(){
@@ -52,8 +49,7 @@ class UserController extends Controller
 
     public function block(Request $request, $id){
         $user = User::find($id);
-        $user->blocked = ($user->blocked == 1) ? 0 : 1;
-//        var_dump($user->blocked);
+        $user->blocked = (int) !$user->blocked;
         $user->save();
 
         return redirect()->back();

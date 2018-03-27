@@ -18,44 +18,38 @@ Auth::routes();
 
 Route::group(['middleware'=>['auth']], function (){
     Route::get('/home', 'HomeController@index')->name('home');
-    Route::get('/users', 'UserController@index')->name('users');
-    Route::get('/users/edit/{id}', 'UserController@edit')->name('users.edit');
-//    Route::get('/users/makeadmin', 'UserController@edit')->name('users.make.admin');
-    Route::get('/profile/changePassword','ProfileController@showChangePasswordForm')->name('change.password');
-    Route::post('/profile/changePassword','ProfileController@changePassword')->name('password.changed');
-    Route::get('/profile','ProfileController@index')->name('profile.index');
-    Route::post('/profile','ProfileController@profileUpdate')->name('profile.save');
+    Route::get('/profile/changePassword','ProfileController@showChangePasswordForm')->name('change_password');
+    Route::post('/profile/changePassword','ProfileController@changePassword')->name('password_changed');
+    Route::get('/profile','ProfileController@index')->name('profile_index');
+    Route::post('/profile','ProfileController@profileUpdate')->name('profile_save');
 });
 
-Route::group(['middleware'=>['admin']], function (){
-    Route::patch('/users/edit/{id}', 'UserController@edit');
-    Route::get('/users/block/{id}', 'UserController@block');
-    Route::get('/admin', 'AdminController@index')->name('admin');
-    Route::get('/users/delete/{id}', 'UserController@delete');
-    Route::get('/users/add', 'UserController@add');
-    Route::post('/users/add', 'UserController@add');
-});
-
-
-
-//Route::patch('/users/edit/{id}','UserController@update')->middleware('admin')->name('update');
-
-
-
-
-
-//Route::get('new-news', 'NewsController@create')->name('create');
-//Route::post('new-news', 'NewsController@store')->name('store');
-//Route::get('edit/{slug}', 'NewsController@edit')->name('edit');
-//Route::post('update', 'NewsController@update')->name('update');
-
-
-
-//    Route::prefix('admin')->group(function (){
-//        Route::get('/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
-//        Route::post('/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
-//        Route::get('/', 'AdminController@index')->name('admin.dashboard');
-//    });
+//Route::group(['middleware'=>['admin']], function (){
+//    Route::get('/users/edit/{id}', 'UserController@edit')->name('users_edit');
+//    Route::patch('/users/edit/{id}', 'UserController@edit')->name('user_edit');
+//    Route::get('/users/block/{id}', 'UserController@block')->name('user_block');
+//    Route::get('/admin', 'AdminController@index')->name('admin');
+//    Route::get('/users/delete/{id}', 'UserController@delete')->name('user_delete');
+//    Route::get('/users/add', 'UserController@add')->name('users_add');
+//    Route::post('/users/add', 'UserController@add')->name('user_add');
+//});
+//Route::prefix('admin')->group(['middleware'=>['admin']], function (){
 //
-//Route::group(['middleware' => ['auth']], function()
-//{Route::get('/login', 'HomeController@');
+//});
+Route::prefix('admin')->group(function () {
+    Route::middleware(['admin'])->group(function () {
+        Route::get('/users', 'UserController@index')->name('users');
+        Route::get('/users/edit/{id}', 'UserController@edit')->name('users_edit');
+        Route::patch('/users/edit/{id}', 'UserController@edit')->name('user_edit');
+        Route::get('/users/block/{id}', 'UserController@block')->name('user_block');
+        Route::get('/', 'AdminController@index')->name('admin');
+        Route::get('/users/delete/{id}', 'UserController@delete')->name('user_delete');
+        Route::get('/users/add', 'UserController@add')->name('users_add');
+        Route::post('/users/add', 'UserController@add')->name('user_add');
+    });
+});
+
+
+
+
+

@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 @include('layouts.adminmenu')
-                <a class="btn btn-primary" href="{{ url('/users/add') }}">Add User</a>
+                <a class="btn btn-primary" href="{{ route('users_add') }}">Add User</a>
 
                 <h3>Users</h3>
 

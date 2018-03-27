@@ -64,12 +64,12 @@
                                         </form>
                                     </li>
                                     <li>
-                                        <a href="{{ route('profile.index') }}">
+                                        <a href="{{ route('profile_index') }}">
                                             Profile
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{ route('change.password') }}">
+                                        <a href="{{ route('change_password') }}">
                                             Change Password
                                         </a>
                                     </li>
