@@ -34,6 +34,8 @@ Route::prefix('admin')->group(function () {
         Route::get('/users/delete/{id}', 'UserController@delete')->name('user_delete');
         Route::get('/users/add', 'UserController@add')->name('users_add');
         Route::post('/users/add', 'UserController@add')->name('user_add');
+        Route::get('/news', 'NewsController@create')->name('news_create');
+        Route::get('/news/add', 'NewsController@addNews')->name('news_add');
     });
 });
 
