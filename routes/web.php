@@ -24,18 +24,6 @@ Route::group(['middleware'=>['auth']], function (){
     Route::post('/profile','ProfileController@profileUpdate')->name('profile_save');
 });
 
-//Route::group(['middleware'=>['admin']], function (){
-//    Route::get('/users/edit/{id}', 'UserController@edit')->name('users_edit');
-//    Route::patch('/users/edit/{id}', 'UserController@edit')->name('user_edit');
-//    Route::get('/users/block/{id}', 'UserController@block')->name('user_block');
-//    Route::get('/admin', 'AdminController@index')->name('admin');
-//    Route::get('/users/delete/{id}', 'UserController@delete')->name('user_delete');
-//    Route::get('/users/add', 'UserController@add')->name('users_add');
-//    Route::post('/users/add', 'UserController@add')->name('user_add');
-//});
-//Route::prefix('admin')->group(['middleware'=>['admin']], function (){
-//
-//});
 Route::prefix('admin')->group(function () {
     Route::middleware(['admin'])->group(function () {
         Route::get('/users', 'UserController@index')->name('users');
