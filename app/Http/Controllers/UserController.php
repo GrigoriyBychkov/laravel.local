@@ -43,7 +43,7 @@ class UserController extends Controller
             return redirect()->back()->with('success', 'The user has updated');
         }
 
-        return view('usersedit', array('id' => $user, 'user' => $user));
+        return view('users_edit', array('id' => $user, 'user' => $user));
 
     }
 
@@ -59,9 +59,8 @@ class UserController extends Controller
     public function delete(Request $request, $id){
         $user = User::find($id);
         $user->delete();
+
         return redirect()->back()->with('success', 'The user has deleted');
-
-
     }
 
     public function add(Request $request){

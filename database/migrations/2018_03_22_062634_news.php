@@ -19,12 +19,11 @@ class News extends Migration
             $table->foreign('author_id')
                   ->references('id')->on('users')
                   ->onDelete('cascade');
-            $table->string('title')->unique();
+            $table->string('title');
             $table->text('body');
-            $table->string('img')->unique();
-            $table->string('file')->unique();
-            $table->string('slug')->unique();
-            $table->boolean('active');
+            $table->string('img')->unique()->default('null');
+            $table->integer('views')->default(0);
+            $table->boolean('active')->default('1');
             $table->timestamps();
    });
     }

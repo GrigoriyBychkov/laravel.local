@@ -16,6 +16,24 @@
 
                     You are logged in as User!
                 </div>
+
+                @foreach($news as $new)
+                <div class="media">
+                    <div class="media-left">
+                        <a href="#">
+                            <img class="media-object" src="/newsImages/{{$new->img}}" alt="...">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading">{{$new->title}}</h4>
+                        {{$new->body}} <br>
+                        @foreach($new->attachments as $attachment)
+                            <a href="/attachments/{{$attachment->attachment}}"> {{ $attachment->attachment }} </a>
+                        @endforeach
+                        Views :{{$new->views}}
+                    </div>
+                </div>
+                    @endforeach
             </div>
         </div>
     </div>

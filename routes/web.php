@@ -34,8 +34,15 @@ Route::prefix('admin')->group(function () {
         Route::get('/users/delete/{id}', 'UserController@delete')->name('user_delete');
         Route::get('/users/add', 'UserController@add')->name('users_add');
         Route::post('/users/add', 'UserController@add')->name('user_add');
-        Route::get('/news', 'NewsController@create')->name('news_create');
+        Route::get('/news', 'NewsController@index')->name('news');
         Route::get('/news/add', 'NewsController@addNews')->name('news_add');
+        Route::post('/news/add', 'NewsController@addNews')->name('news_added');
+        Route::get('/news/edit/{id}', 'NewsController@editNews')->name('news_edit');
+        Route::post('/news/edit/{id}', 'NewsController@editNews')->name('new_edit');
+        Route::get('/news/archive/{id}', 'NewsController@archive')->name('news_archive');
+        Route::get('/news/delete/{id}', 'NewsController@deleteNews')->name('news_delete');
+        Route::get('/attachments/delete/{id}', 'NewsController@deleteAttachment')->name('attachment_delete');
+
     });
 });
 

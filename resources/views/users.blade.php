@@ -29,9 +29,9 @@
                             <td>{{ ($user->role == 1 ? "Admin" : "Customer") }}</td>
                             <td>{{ ($user->blocked == 1) ? "Yes" : "No" }}</td>
                             <td>
-                                <a href="/users/edit/{{ $user->id  }}" class="btn">Edit</a>
-                                <a href="/users/delete/{{ $user->id  }}" class="btn btn-primary">Delete</a>
-                                <a href="/users/block/{{ $user->id  }}" class="btn btn-primary">{{ ($user->blocked == 1) ? "Remove Ban" : "Ban" }}</a>
+                                <a href="/admin/users/edit/{{ $user->id  }}" class="btn">Edit</a>
+                                <a href="/admin/users/delete/{{ $user->id  }}" class="btn btn-primary">Delete</a>
+                                <a href="/admin/users/block/{{ $user->id  }}" class="btn btn-primary">{{ ($user->blocked == 1) ? "Remove Ban" : "Ban" }}</a>
                             </td>
 
                         </tr>
