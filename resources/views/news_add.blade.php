@@ -8,6 +8,15 @@
 
                 <div class="panel panel-default">
                     <h3>Add News</h3>
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     <form method="post" action="{{route('news.store')}}" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         {{ method_field('post') }}
@@ -31,6 +40,7 @@
                         </div>
                         <button type="submit" class="btn btn-primary">Save</button>
                     </form>
+
                 </div>
             </div>
         </div>

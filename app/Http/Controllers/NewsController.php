@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\NewsRequest;
 use Illuminate\Http\Request;
 use App\News;
 use App\Attachments;
 use App\Http\Requests\PostFormRequest;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Storage;
 
 
 class NewsController extends Controller
@@ -37,23 +38,20 @@ class NewsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(NewsRequest $request)
     {
         $news = New News();
-        //validation
-        $this->validate($request, [
-            'title' => 'required',
-            'body' => 'required',
-        ]);
 
         $news->title = request('title');
         $news->body = request('body');
         $news->author_id = $request->user()->id;
-
-        self::setNewsImage($request, $news);
+        $image = $request->file('input_img');
+        if ($image) {
+            $news->img = self::handleNewsImage($image);
+        }
 
         $news->save();
 
@@ -61,98 +59,87 @@ class NewsController extends Controller
         return redirect()->route('news.create')->with('success', 'The News has added');
     }
 
-    private function setNewsImage($request, $news)
+    private function handleNewsImage($image)
     {
-        //validation
-        $this->validate($request, [
-            'input_img' => 'required',
-        ]);
-        $image = $request->file('input_img');
-        $name = time().'.'.$image->getClientOriginalExtension();
+
+        $name = time() . '.' . $image->getClientOriginalExtension();
         $destinationPath = public_path('/newsImages');
         $image->move($destinationPath, $name);
-        $news->img = $name;
+        return $name;
     }
 
     private function saveNewsAttachments($request, $newsId)
     {
-        //validation
-        $this->validate($request, [
-            'attachments' => 'required',
-        ]);
         $files = $request->file('attachments');
 
-        if ($files) {
-            foreach($files as $file){
-                $name = $newsId . '_' . $file->getClientOriginalName();
-                $destinationPath = public_path('/attachments');
-                $file->move($destinationPath, $name);
+        foreach ($files as $file) {
+            $name = $newsId . '_' . $file->getClientOriginalName();
+            $destinationPath = public_path('/attachments');
+            $file->move($destinationPath, $name);
 
-                $att = New Attachments();
-                $att->news_id = $newsId;
-                $att->attachment = $name;
-                $att->save();
-            }
+            $att = New Attachments();
+            $att->news_id = $newsId;
+            $att->attachment = $name;
+            $att->save();
         }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-
         $news = News::find($id);
-        $news->views = $news->views+1;
-        $news->save();
-        return view('news_show', array('news'=>$news));
+
+        return view('news_show', array('news' => $news));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-       $news = News::find($id);
-       $news->attachments = Attachments::where('news_id', '=', $id)->get();
-       return view('news_edit',array('news'=> $news));
+
+        $news = News::find($id);
+
+        return view('news_edit', array('news' => $news));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update($request, $id)
+    public function update(NewsRequest $request, $id)
     {
         $news = News::find($id);
-        //validation
-        $this->validate($request, [
-            'title' => 'required',
-            'body' => 'required',
-        ]);
+
         $news->title = request('title');
         $news->body = request('body');
+        $image = $request->file('input_img');
+        if ($image) {
+            $news->img = self::handleNewsImage($image);
+        }
 
-        self::setNewsImage($request, $news);
 
         $news->save();
 
         self::saveNewsAttachments($request, $news->id);
+        return redirect()->back()->with('success', 'News was updated');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
 
@@ -165,17 +152,20 @@ class NewsController extends Controller
         return redirect()->route('news.index');
     }
 
-    public function archive(Request $request, $id){
+    public function archive($id)
+    {
         $news = News::find($id);
-        $news->active = (int) !$news->active;
+        $news->active = (int)!$news->active;
         $news->save();
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'The News has Archived');
     }
 
-    public function deleteAttachment(Request $request, $id){
+    public function deleteAttachment(Request $request, $id)
+    {
         $attachment = Attachments::find($id);
         $attachment->delete();
+        Storage::delete($attachment->attachment);
 
         return redirect()->back()->with('success', 'The attachment has deleted');
     }

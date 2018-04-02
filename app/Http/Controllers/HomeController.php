@@ -8,7 +8,6 @@ use App\Attachments;
 use Redirect;
 
 
-
 class HomeController extends Controller
 {
 //    use Hash;
@@ -29,16 +28,17 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $news =  News::paginate(5);
+        $news = News::paginate(5);
 
         return view('home', array('news' => $news));
     }
 
-    public function show($id){
+    public function show($id)
+    {
         $news = News::find($id);
-        $news->views = $news->views+1;
+        $news->views++;
         $news->save();
-        return view('news_show_customer', array('news'=>$news));
+        return view('news_show_customer', array('news' => $news));
     }
 
 

@@ -25,7 +25,9 @@ class NewsRequest extends FormRequest
     {
         return [
             'title' => 'required',
-            'body' => 'required'
+            'body' => 'required',
+            'input_img' => 'image|max:10000',
+            'attachments.*' => 'mimes:txt,doc,docx|max:3000',
         ];
     }
 }

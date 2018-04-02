@@ -3,7 +3,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
-            @include('layouts.adminmenu')
+                @include('layouts.adminmenu')
                 <a class="btn btn-primary" href="{{ route('news.create') }}">Add News</a>
                 <h3>News</h3>
 
@@ -24,9 +24,10 @@
                             <td><b>{{ $new->title }}</b>
                                 <p>{{ $new->body }}</p>
                                 <p>Views :{{$new->views}}</p>
-                            @foreach($new->attachments as $attachment)
-                                    <a href="/attachments/{{$attachment->attachment}}"> {{ $attachment->attachment }} </a><br>
-                            @endforeach
+                                @foreach($new->attachments as $attachment)
+                                    <a href="/attachments/{{$attachment->attachment}}"> {{ $attachment->attachment }} </a>
+                                    <br>
+                                @endforeach
                             </td>
                             <td>
                                 <a href="{{route('news.edit',['id'=>$new->id])}}" class="btn">Edit</a>

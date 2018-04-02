@@ -8,20 +8,30 @@
 
                 <div class="panel panel-default">
                     <h3>Edit News</h3>
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
 
 
-                    <form method="post" action="" enctype="multipart/form-data">
+                    <form method="post" action="{{route('news.update',['id'=>$news->id])}}"
+                          enctype="multipart/form-data">
                         {{ csrf_field() }}
-                        {{ method_field('post') }}
+                        {{ method_field('patch') }}
                         <div class="form-group">
                             <label for="body">Image</label>
-                            <input type="file" name = "input_img">
+                            <input type="file" name="input_img">
                         </div>
                         <div class="form-group">
                             <img class="media-object" src="/newsImages/{{$news->img}}" alt="...">
                             <label for="title">Title</label>
                             <input type="text" name="title" value="{{ $news->title }}" class="form-control" id="title"
-                                    placeholder="Enter Title">
+                                   placeholder="Enter Title">
                         </div>
                         @if ($errors->has('title'))
                             <span class="help-block">
@@ -30,8 +40,8 @@
                         @endif
                         <div class="form-group">
                             <label for="body">News Text</label>
-                            <textarea  name="body" minlength="3" class="form-control"
-                                      id="body" >{{ $news->body }}</textarea>
+                            <textarea name="body" minlength="3" class="form-control"
+                                      id="body">{{ $news->body }}</textarea>
                         </div>
                         @if ($errors->has('body'))
                             <span class="help-block">
@@ -56,16 +66,17 @@
                             </thead>
                             <tbody>
                             @foreach($news->attachments as $attachment)
-                            <tr>
-                                <td scope="row">{{ $attachment->id }}</td>
-                                <td>
-                                    <a href="/attachments/{{$attachment->attachment}}"> {{ $attachment->attachment }} </a><br>
-                                </td>
-                                <td>
-                                    <a href="/admin/attachments/delete/{{  $attachment->id  }}" class="btn">Delete Attachment</a>
-                                </td>
-                            </tr>
-                                @endforeach
+                                <tr>
+                                    <td scope="row">{{ $attachment->id }}</td>
+                                    <td>
+                                        <a href="/attachments/{{$attachment->attachment}}"> {{ $attachment->attachment }} </a><br>
+                                    </td>
+                                    <td>
+                                        <a href="/admin/attachments/delete/{{  $attachment->id  }}" class="btn">Delete
+                                            Attachment</a>
+                                    </td>
+                                </tr>
+                            @endforeach
                             </tbody>
                         </table>
 
