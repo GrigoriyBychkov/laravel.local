@@ -8,7 +8,7 @@
 
                 <div class="panel panel-default">
                     <h3>Add News</h3>
-                    <form method="post" action="" enctype="multipart/form-data">
+                    <form method="post" action="{{route('news.store')}}" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         {{ method_field('post') }}
                         <div class="form-group">

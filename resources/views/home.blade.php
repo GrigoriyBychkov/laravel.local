@@ -26,14 +26,15 @@
                     </div>
                     <div class="media-body">
                         <h4 class="media-heading">{{$new->title}}</h4>
-                        {{$new->body}} <br>
-                        @foreach($new->attachments as $attachment)
-                            <a href="/attachments/{{$attachment->attachment}}"> {{ $attachment->attachment }} </a>
-                        @endforeach
+                        {{ substr($new->body, 0, 70)}} <a href="{{route('news_show_customer',['id'=>$new->id])}}">Read All</a><br>
+                        {{--@foreach($new->attachments as $attachment)--}}
+                            {{--<a href="/attachments/{{$attachment->attachment}}"> {{ $attachment->attachment }} </a>--}}
+                        {{--@endforeach--}}
                         Views :{{$new->views}}
                     </div>
                 </div>
                     @endforeach
+                {{$news->links()}}
             </div>
         </div>
     </div>

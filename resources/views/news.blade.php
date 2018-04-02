@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
             @include('layouts.adminmenu')
-                <a class="btn btn-primary" href="{{ route('news_add') }}">Add News</a>
+                <a class="btn btn-primary" href="{{ route('news.create') }}">Add News</a>
                 <h3>News</h3>
 
                 <table class="table">
@@ -29,13 +29,14 @@
                             @endforeach
                             </td>
                             <td>
-                                <a href="/admin/news/edit/{{ $new->id  }}" class="btn">Edit</a>
-                                <a href="/admin/news/delete/{{ $new->id  }}" class="btn">Delete</a>
-                                <a href="/admin/news/archive/{{ $new->id  }}"
+                                <a href="{{route('news.edit',['id'=>$new->id])}}" class="btn">Edit</a>
+                                <a href="{{route('news.show',['id'=>$new->id])}}" class="btn">Delete</a>
+                                <a href="{{route('news_archive',['id'=>$new->id])}}"
                                    class="btn">{{ $new->active ==1 ? "Restore" : "Archive" }}</a>
                             </td>
                         </tr>
                     @endforeach
+                    {{$news->links()}}
                     </tbody>
                 </table>
             </div>

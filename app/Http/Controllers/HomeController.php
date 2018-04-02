@@ -29,15 +29,16 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $news =  News::all();
+        $news =  News::paginate(5);
 
-        foreach ($news as $record){
-            $record->views = $record->views+1;
-            $record->save();
-            $attachments = Attachments::where('news_id', '=', $record->id)->get();
-            $record->attachments =$attachments;
-        }
         return view('home', array('news' => $news));
+    }
+
+    public function show($id){
+        $news = News::find($id);
+        $news->views = $news->views+1;
+        $news->save();
+        return view('news_show_customer', array('news'=>$news));
     }
 
 
