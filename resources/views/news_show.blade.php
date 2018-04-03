@@ -14,7 +14,7 @@
                         <div class="media-body">
                             <h4 class="media-heading">{{$news->title}}</h4>
                             {{$news->body}} <br>
-                            @foreach($news->attachments as $attachment)
+                            @foreach($news->attachment as $attachment)
                                 <a href="/attachments/{{$attachment->attachment}}"> {{ $attachment->attachment }} </a>
                             @endforeach
                             Views :{{$news->views}}

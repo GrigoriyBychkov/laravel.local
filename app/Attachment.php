@@ -4,9 +4,10 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 
-class Attachments extends Model
+class Attachment extends Model
 {
     protected $guarded = [];
+    protected $table = 'attachment';
 
     public function author()
     {

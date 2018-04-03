@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Attachments extends Migration
+class Attachment extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class Attachments extends Migration
      */
     public function up()
     {
-        Schema::create('attachments', function (Blueprint $table) {
+        Schema::create('attachment', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('news_id')->unsigned()->default(0);
+            $table->integer('news_id')->unsigned();
             $table->foreign('news_id')
                 ->references('id')->on('news')
                 ->onDelete('cascade');
@@ -32,6 +32,6 @@ class Attachments extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('attachments');
+        Schema::dropIfExists('attachment');
     }
 }

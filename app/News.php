@@ -14,9 +14,9 @@ class News extends Model
         return $this->belongsTo('App\User', 'author_id');
     }
 
-    public function attachments()
+    public function attachment()
     {
-        return $this->hasMany('App\Attachments');
+        return $this->hasMany('App\Attachment');
     }
 
 }

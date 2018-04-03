@@ -17,23 +17,23 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach( $news as $new )
+                    @foreach( $news as $record )
                         <tr>
-                            <td scope="row">{{ $new->id  }}</td>
-                            <td><img width="100" src="/newsImages/{{$new->img}}" alt=""></td>
-                            <td><b>{{ $new->title }}</b>
-                                <p>{{ $new->body }}</p>
-                                <p>Views :{{$new->views}}</p>
-                                @foreach($new->attachments as $attachment)
+                            <td scope="row">{{ $record->id  }}</td>
+                            <td><img width="100" src="/newsImages/{{$record->img}}" alt=""></td>
+                            <td><b>{{ $record->title }}</b>
+                                <p>{{ $record->body }}</p>
+                                <p>Views :{{$record->views}}</p>
+                                @foreach($record->attachment as $attachment)
                                     <a href="/attachments/{{$attachment->attachment}}"> {{ $attachment->attachment }} </a>
                                     <br>
                                 @endforeach
                             </td>
                             <td>
-                                <a href="{{route('news.edit',['id'=>$new->id])}}" class="btn">Edit</a>
-                                <a href="{{route('news.show',['id'=>$new->id])}}" class="btn">Delete</a>
-                                <a href="{{route('news_archive',['id'=>$new->id])}}"
-                                   class="btn">{{ $new->active ==1 ? "Restore" : "Archive" }}</a>
+                                <a href="{{route('news.edit',['id'=>$record->id])}}" class="btn">Edit</a>
+                                <a href="{{route('news.show',['id'=>$record->id])}}" class="btn">Delete</a>
+                                <a href="{{route('news_archive',['id'=>$record->id])}}"
+                                   class="btn">{{ $record->active ==1 ? "Restore" : "Archive" }}</a>
                             </td>
                         </tr>
                     @endforeach

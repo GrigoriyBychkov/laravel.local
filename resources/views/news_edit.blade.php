@@ -65,7 +65,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($news->attachments as $attachment)
+                            @foreach($news->attachment as $attachment)
                                 <tr>
                                     <td scope="row">{{ $attachment->id }}</td>
                                     <td>
@@ -82,7 +82,7 @@
 
                         <div class="form-group">
                             <label for="body">Attachments</label>
-                            <input type="file" multiple name="attachments[]">
+                            <input type="file" multiple name="attachment[]">
                         </div>
                         <button type="submit" class="btn btn-primary">Save</button>
                     </form>

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\News;
-use App\Attachments;
+use App\Attachment;
 use Redirect;
 
 

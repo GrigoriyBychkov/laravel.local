@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\NewsRequest;
 use Illuminate\Http\Request;
 use App\News;
-use App\Attachments;
+use App\Attachment;
 use App\Http\Requests\PostFormRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -70,14 +70,13 @@ class NewsController extends Controller
 
     private function saveNewsAttachments($request, $newsId)
     {
-        $files = $request->file('attachments');
-
+        $files = $request->file('attachment');
         foreach ($files as $file) {
             $name = $newsId . '_' . $file->getClientOriginalName();
             $destinationPath = public_path('/attachments');
             $file->move($destinationPath, $name);
 
-            $att = New Attachments();
+            $att = New Attachment();
             $att->news_id = $newsId;
             $att->attachment = $name;
             $att->save();
@@ -163,7 +162,7 @@ class NewsController extends Controller
 
     public function deleteAttachment(Request $request, $id)
     {
-        $attachment = Attachments::find($id);
+        $attachment = Attachment::find($id);
         $attachment->delete();
         Storage::delete($attachment->attachment);
 
