@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Attachment extends Model
 {
     protected $guarded = [];
-    protected $table = 'attachment';
+    protected $table = 'attachments';
 
     public function author()
     {
