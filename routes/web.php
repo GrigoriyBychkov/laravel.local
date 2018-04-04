@@ -38,6 +38,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/news/archive/{id}', 'NewsController@archive')->name('news_archive');
         Route::get('/attachments/delete/{id}', 'NewsController@deleteAttachment')->name('attachment_delete');
         Route::resource('news', 'NewsController');
+        Route::resource('categories', 'CategoryController');
     });
 });
 
