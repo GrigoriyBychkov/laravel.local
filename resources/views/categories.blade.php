@@ -8,7 +8,7 @@
                 <h3>Categories</h3>
                 <ul>
                     @foreach( $categories as $record )
-                        @if($record->category_id == 'null')
+                        @if($record->category_id == null)
                             <li>
                                 {{ $record->name }}   <a href="{{route('categories.edit',['id'=>$record->id])}}" class="btn">Edit</a>
                                 @include('layouts.subcats', ['subCategories' => $record->subCategories])

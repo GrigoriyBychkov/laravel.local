@@ -15,7 +15,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::all();
-        return view('categories',array('categories' => $categories));
+        return view('categories', array('categories' => $categories));
     }
 
     /**
@@ -26,80 +26,80 @@ class CategoryController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('categories_add',array('categories' =>$categories));
+        return view('categories_add', array('categories' => $categories));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $cat = New Category();
         $cat->name = request('name');
-        if(request('category_id'))
-        {
+        if (request('category_id')) {
             $cat->category_id = request('category_id');
         }
         $cat->save();
-        return redirect()->back()->with('success','Category added');
+        return redirect()->back()->with('success', 'Category added');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        //
+//
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        //
+        $category = Category::find($id);
+        $categories = Category::all();
+
+        return view('categories_edit', array('category' => $category, 'categories' => $categories));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        //
+        $category = Category::find($id);
+        $category->name = request('name');
+        $category->category_id = request('category_id');
+        $category->save();
+
+        return redirect()->back()->with('success', 'Category was updated');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         $category = Category::find($id);
-        dd($category);
         $category->delete();
 
         return redirect()->route('categories.index');
     }
 
-    public function categoryDelete($name){
-        $cat = Category::find($name);
-        $cat->delete();
-
-        return redirect()->back()->with('success', 'The Category has deleted');
-    }
 }

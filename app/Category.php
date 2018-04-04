@@ -19,8 +19,13 @@ class Category extends Model
         return $this->hasMany('App\Category');
     }
 
-    public function parent()
+    protected function parent()
     {
-        return $this->belongsTo('App\Category' ,'category_id');
+        return $this->belongsTo('App\Category', 'category_id');
+    }
+
+    protected function goods()
+    {
+        return $this->hasMany('App\Product');
     }
 }
