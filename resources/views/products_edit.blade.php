@@ -7,7 +7,7 @@
                 @include('layouts.adminmenu')
 
                 <div class="panel panel-default">
-                    <h3>Edit News</h3>
+                    <h3>Edit Product</h3>
                     @if ($errors->any())
                         <div class="alert alert-danger">
                             <ul>
@@ -29,9 +29,11 @@
                         </div>
                         <div class="form-group">
                             <img class="media-object" src="/productImages/{{$product->img}}" alt="...">
-                            <label for="title">Title</label>
+                            <label for="name">Name</label>
                             <input type="text" name="name" value="{{ $product->name }}" class="form-control" id="name"
                                    placeholder="Enter Name">
+                            <label for="price">price</label>
+                            <input type="number" name="price" value="{{ $product->price }}" class="form-control" id="price">
                         </div>
                         @if ($errors->has('title'))
                             <span class="help-block">
@@ -51,12 +53,9 @@
                         <div class="form-group">
                             <label for="category_id">Category</label>
                             <select class="form-control" name="category_id" id="category_id">
-                                <option value="">{{$product->category->name}}</option>
-                                <option value="">Parent Category</option>
-
-
+                                <option value="" >{{$product->category->name}}</option>
                                 @foreach($categories as $record)
-                                    <option value="{{$record->id}}">{{$record->name}}</option>
+                                    <option value="{{$record->id}}" {{  $record->id == $product->category_id ? 'selected' : '' }}>{{$record->name}}</option>
                                 @endforeach
                             </select>
                         </div>

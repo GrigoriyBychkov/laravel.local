@@ -18,6 +18,7 @@ class Products extends Migration
             $table->string('name')->unique();
             $table->string('img')->default('null');
             $table->string('description');
+            $table->integer('price')->unsigned();
             $table->integer('category_id')->unsigned();
             $table->timestamps();
         });

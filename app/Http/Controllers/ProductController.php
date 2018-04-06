@@ -46,15 +46,16 @@ class ProductController extends Controller
         $product->category_id = request('category_id');
         $image = $request->file('input_img');
         if ($image) {
-            $product->img = self::handleNewsImage($image);
+            $product->img = self::handleProductImage($image);
         }
+        $product->price = request('price');
 
         $product->save();
 
         return redirect()->route('product.index')->with('success', 'The News has added');
     }
 
-    private function handleNewsImage($image)
+    private function handleProductImage($image)
     {
 
         $name = time() . '.' . $image->getClientOriginalExtension();
@@ -103,6 +104,8 @@ class ProductController extends Controller
         $product->name = request('name');
         $product->description = request('description');
         $product->category_id = request('category_id');
+        $product->price = request('price');
+
         $product->save();
 
         return redirect()->back()->with('success', 'Product was updated');

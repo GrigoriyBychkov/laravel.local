@@ -23,6 +23,15 @@ Route::group(['middleware'=>['auth']], function (){
     Route::get('/profile','ProfileController@index')->name('profile_index');
     Route::post('/profile','ProfileController@profileUpdate')->name('profile_save');
     Route::get('/news/{id}', 'HomeController@show')->name('news_show_customer');
+    Route::get('/goods', 'HomeController@showGoods')->name('goods_show_customer');
+    Route::get('/goods/{category_id}', 'HomeController@showGoodsForCategory')->name('goods_show_category');
+    Route::get('/goods/show/{id}', 'ShoppingCart@productShow')->name('show_product');
+    Route::post('/goods/show/{id}', 'ShoppingCart@productOrder')->name('product.order');
+    Route::get('/basket', 'ShoppingCart@basket')->name('basket');
+    Route::post('/basket', 'ShoppingCart@acceptOrder')->name('accept_order');
+    Route::get('/delete/order/{id}', 'ShoppingCart@orderDelete')->name('order_delete');
+
+
 });
 
 Route::prefix('admin')->group(function () {
@@ -39,7 +48,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/attachments/delete/{id}', 'NewsController@deleteAttachment')->name('attachment_delete');
         Route::resource('news', 'NewsController');
         Route::resource('categories', 'CategoryController');
-        Route::resource('product', 'ProductController');
+        Route::resource('product', 'ProductController', ['except' => ['show']]);
     });
 });
 

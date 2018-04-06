@@ -18,7 +18,7 @@
                             <option value="">Parent Category</option>
 
                             @foreach($categories as $record)
-                                <option value="{{$record->id}}">{{$record->name}}</option>
+                                <option value="{{$record->id}}" {{($record->id ==$category->category_id) ? 'selected' : ''}} >{{$record->name}}</option>
                             @endforeach
                         </select>
                     </div>

@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
+use App\Product;
 use Illuminate\Http\Request;
 use App\News;
 use App\Attachment;
 use Redirect;
+use Session;
 
 
 class HomeController extends Controller
@@ -39,6 +42,20 @@ class HomeController extends Controller
         $news->views++;
         $news->save();
         return view('news_show_customer', array('news' => $news));
+    }
+
+    public function showGoods()
+    {
+        $products = Product::paginate(5);
+        $categories = Category::all();
+        return view('goods_show_customer', array('products'=>$products, 'categories'=>$categories));
+    }
+
+    public function showGoodsForCategory($category_id)
+    {
+        $products = Product::where('category_id','=',$category_id)->paginate(5);
+        $categories = Category::all();
+        return view('goods_show_customer', array('products'=>$products, 'categories'=>$categories));
     }
 
 

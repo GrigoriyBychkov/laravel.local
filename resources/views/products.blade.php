@@ -13,6 +13,7 @@
                         <th scope="col"></th>
                         <th scope="col">Name</th>
                         <th scope="col">Description</th>
+                        <th scope="col">Price</th>
                         <th scope="col">Action</th>
                     </tr>
                     </thead>
@@ -25,6 +26,7 @@
                             <td><b>{{ $record->name }}</b>
                             </td>
                             <td>{{$record->description}}</td>
+                            <td>{{$record->price}}</td>
                             <td>
                                 <a href="{{route('product.edit',['id'=>$record->id])}}" class="btn">Edit</a>
                             </td>

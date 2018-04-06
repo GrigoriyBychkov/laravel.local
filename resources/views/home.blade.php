@@ -4,6 +4,9 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
+            @include('layouts.usermenu')
+
+
             <div class="panel panel-default">
                 <div class="panel-heading">User Dashboard</div>
 
@@ -13,7 +16,6 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
                     You are logged in as User!
                 </div>
 
@@ -27,9 +29,6 @@
                     <div class="media-body">
                         <h4 class="media-heading">{{$new->title}}</h4>
                         {{ substr($new->body, 0, 70)}} <a href="{{route('news_show_customer',['id'=>$new->id])}}">Read All</a><br>
-                        {{--@foreach($new->attachments as $attachment)--}}
-                            {{--<a href="/attachments/{{$attachment->attachment}}"> {{ $attachment->attachment }} </a>--}}
-                        {{--@endforeach--}}
                         Views :{{$new->views}}
                     </div>
                 </div>

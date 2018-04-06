@@ -44,6 +44,11 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div class="form-group">
+                            <label for="price">Price</label>
+                            <input type="text" name="price" class="form-control" id="price"
+                                   placeholder="Enter Price" required>
+                        </div>
                         <button type="submit" class="btn btn-primary">Save</button>
                     </form>
 
