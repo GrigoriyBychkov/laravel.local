@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Order;
+use App\OrderItem;
 use Illuminate\Http\Request;
 use App\Product;
 use Session;
@@ -13,13 +15,23 @@ class ShoppingCart extends Controller
     {
         dump(Session::all());
 
+
         $product = Product::find($id);
         return view('product', array('product' => $product));
     }
 
-    public function productOrder($id)
+    public function productOrder(Request $request, $id)
     {
-        Session::push('order', ['id' => $id, 'quantity' => request('quantity')]);
+        $orders = Session::get('order');
+
+        if ($orders == null) {
+            $orders = [];
+        }
+        $quantity = request('quantity');
+        $orders[$id] = $quantity;
+
+
+        Session::put('order', $orders);
 
         return redirect()->back()->with('success', 'product added to cart');
     }
@@ -27,26 +39,18 @@ class ShoppingCart extends Controller
     public function basket()
     {
         $orders = Session::get('order');
-        $ids = [];
-        dump($orders);
-
-        foreach ($orders as $order) {
-            $ids[] = $order['id'];
-
-        }
-        $productsMap = [];
-        $products = Product::whereIn('id', $ids)->get();
-        foreach ($products as $product) {
-            $productsMap[$product->id] = $product;
-        }
+        $products = Product::whereIn('id', array_keys($orders))->get()->keyBy('id');
 
         $cartProducts = [];
         $total = 0;
-        foreach ($orders as $order) {
-            $order['product'] = $productsMap[$order['id']];
-            $order['price'] = $order['product']->price * $order['quantity'];
-            $cartProducts[] = $order;
-            $total += $order['price'];
+
+        foreach ($orders as $product_id => $quantity) {
+            $cartProducts [] = [
+                'price' => $products[$product_id]->price,
+                'quantity' => $quantity,
+                'product' => $products[$product_id],
+            ];
+            $total += $products[$product_id]->price * $quantity;
         }
 
         return view('basket', array('cartProducts' => $cartProducts, 'total' => $total));
@@ -55,20 +59,28 @@ class ShoppingCart extends Controller
     public function orderDelete($id)
     {
         $orders = Session::get('order');
-        $newOrders = [];
+        unset($orders[$id]);
+        Session::put('order', $orders);
 
-        foreach ($orders as $order) {
-            if ($order['id'] != $id) {
-                $newOrders[] = $order;
-            }
-        }
-
-        Session::put('order', $newOrders);
         return redirect()->back();
     }
 
-    public function acceptOrder()
+    public function acceptOrder(Request $request)
     {
+        $order = New Order();
+        $order->user_id = $request->user()->id;
+        $order->save();
+        $sessionItems = Session::get('order');
+        foreach ($sessionItems as $product_id=>$quantity)
+        {
+            $item = New OrderItem();
+            $item->order_id = $order->id;
+            $item->product_id = $product_id;
+            $item->quantity = $quantity;
+            $item->save();
+        }
+        Session::put('order', []);
+        return redirect()->route('home');
 
     }
 }

@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Order;
 use App\Product;
 use Illuminate\Http\Request;
 use App\News;
 use App\Attachment;
 use Redirect;
 use Session;
+use Illuminate\Support\Facades\Facade;
 
 
 class HomeController extends Controller
@@ -44,19 +46,30 @@ class HomeController extends Controller
         return view('news_show_customer', array('news' => $news));
     }
 
-    public function showGoods()
+    public function showGoods($category_id = null)
     {
-        $products = Product::paginate(5);
         $categories = Category::all();
-        return view('goods_show_customer', array('products'=>$products, 'categories'=>$categories));
+
+        if ($category_id != null) {
+            $products = Product::where('category_id', '=', $category_id)->paginate(5);
+
+        } else {
+            $products = Product::paginate(5);
+        }
+        return \View::make('goods_show_customer')->with(['products' => $products, 'categories' => $categories]);
     }
 
-    public function showGoodsForCategory($category_id)
+    public function myOrders(Request $request)
     {
-        $products = Product::where('category_id','=',$category_id)->paginate(5);
-        $categories = Category::all();
-        return view('goods_show_customer', array('products'=>$products, 'categories'=>$categories));
+        $orders = Order::where('user_id', '=', $request->user()->id)->get();
+
+        return view('my_orders', array('orders' => $orders));
     }
 
+    public function adminPageOrders()
+    {
+        $orders = Order::all();
+        return view('admin_orders_page', array('orders' => $orders));
+    }
 
 }

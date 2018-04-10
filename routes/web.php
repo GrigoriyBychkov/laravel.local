@@ -1,5 +1,8 @@
 <?php
 
+use App\Category;
+use App\Product;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,22 +19,20 @@ Route::get('/', function () {
 });
 Auth::routes();
 
-Route::group(['middleware'=>['auth']], function (){
+Route::group(['middleware' => ['auth']], function () {
     Route::get('/home', 'HomeController@index')->name('home');
-    Route::get('/profile/changePassword','ProfileController@showChangePasswordForm')->name('change_password');
-    Route::post('/profile/changePassword','ProfileController@changePassword')->name('password_changed');
-    Route::get('/profile','ProfileController@index')->name('profile_index');
-    Route::post('/profile','ProfileController@profileUpdate')->name('profile_save');
+    Route::get('/profile/changePassword', 'ProfileController@showChangePasswordForm')->name('change_password');
+    Route::post('/profile/changePassword', 'ProfileController@changePassword')->name('password_changed');
+    Route::get('/profile', 'ProfileController@index')->name('profile_index');
+    Route::post('/profile', 'ProfileController@profileUpdate')->name('profile_save');
     Route::get('/news/{id}', 'HomeController@show')->name('news_show_customer');
-    Route::get('/goods', 'HomeController@showGoods')->name('goods_show_customer');
-    Route::get('/goods/{category_id}', 'HomeController@showGoodsForCategory')->name('goods_show_category');
+    Route::get('/goods/{category_id?}', 'HomeController@showGoods')->name('goods_show_customer');
     Route::get('/goods/show/{id}', 'ShoppingCart@productShow')->name('show_product');
     Route::post('/goods/show/{id}', 'ShoppingCart@productOrder')->name('product.order');
     Route::get('/basket', 'ShoppingCart@basket')->name('basket');
     Route::post('/basket', 'ShoppingCart@acceptOrder')->name('accept_order');
     Route::get('/delete/order/{id}', 'ShoppingCart@orderDelete')->name('order_delete');
-
-
+    Route::get('/my_orders', 'HomeController@myOrders')->name('my_orders_customer');
 });
 
 Route::prefix('admin')->group(function () {
@@ -49,6 +50,7 @@ Route::prefix('admin')->group(function () {
         Route::resource('news', 'NewsController');
         Route::resource('categories', 'CategoryController');
         Route::resource('product', 'ProductController', ['except' => ['show']]);
+        Route::get('/orders', 'HomeController@adminPageOrders')->name('admin_page_orders');
     });
 });
 
