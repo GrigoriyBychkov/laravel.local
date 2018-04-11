@@ -38,6 +38,10 @@ class HomeController extends Controller
         return view('home', array('news' => $news));
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function show($id)
     {
         $news = News::find($id);
@@ -46,6 +50,10 @@ class HomeController extends Controller
         return view('news_show_customer', array('news' => $news));
     }
 
+    /**
+     * @param null $category_id
+     * @return mixed
+     */
     public function showGoods($category_id = null)
     {
         $categories = Category::all();
@@ -59,6 +67,10 @@ class HomeController extends Controller
         return \View::make('goods_show_customer')->with(['products' => $products, 'categories' => $categories]);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function myOrders(Request $request)
     {
         $orders = Order::where('user_id', '=', $request->user()->id)->get();
@@ -66,6 +78,9 @@ class HomeController extends Controller
         return view('my_orders', array('orders' => $orders));
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function adminPageOrders()
     {
         $orders = Order::all();

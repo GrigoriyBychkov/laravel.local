@@ -67,7 +67,6 @@ class CategoryController extends Controller
     {
         $category = Category::find($id);
         $categories = Category::all();
-        dump($category);
         return view('categories_edit', array('category' => $category, 'categories' => $categories));
     }
 

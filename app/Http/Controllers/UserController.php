@@ -14,20 +14,30 @@ class UserController extends Controller
 {
     use RegistersUsers;
 
-    public function index(){
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function index()
+    {
         $users = User::all();
         return view('users', array('users' => $users));
     }
 
-    public function edit(Request $request, $id){
+    /**
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
+    public function edit(Request $request, $id)
+    {
         $user = User::find($id);
 
         if (request('name')) {
 
 
             $this->validate(request(), [
-                'name'=>'required',
-                'email'=>'required|email'
+                'name' => 'required',
+                'email' => 'required|email'
             ]);
             $user->email = request('email');
             $user->name = request('name');
@@ -47,23 +57,40 @@ class UserController extends Controller
 
     }
 
-    public function block(Request $request, $id){
+    /**
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function block(Request $request, $id)
+    {
         $user = User::find($id);
-        $user->blocked = (int) !$user->blocked;
+        $user->blocked = (int)!$user->blocked;
         $user->save();
 
         return redirect()->back();
 
     }
 
-    public function delete(Request $request, $id){
+    /**
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function delete(Request $request, $id)
+    {
         $user = User::find($id);
         $user->delete();
 
         return redirect()->back()->with('success', 'The user has deleted');
     }
 
-    public function add(Request $request){
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
+    public function add(Request $request)
+    {
         $user = new User();
         if (request('name')) {
             $result = $this->validate(request(), [
@@ -77,8 +104,7 @@ class UserController extends Controller
             $user->password = bcrypt(request('password'));
 
 
-
-            if($result){
+            if ($result) {
                 $user->save();
             } else {
                 return view('useradd', array('user' => $user))->withInput();
@@ -89,8 +115,4 @@ class UserController extends Controller
         }
         return view('useradd');
     }
-
-
-
-
 }

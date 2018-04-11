@@ -12,16 +12,23 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Validator;
 
 
-
 class ProfileController extends Controller
 {
     use RegistersUsers;
 
-    public function index(){
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function index()
+    {
         $user = Auth::user();
         return view('profile', array('user' => $user));
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
     public function profileUpdate(Request $request)
     {
         $user = Auth::user();
@@ -43,17 +50,26 @@ class ProfileController extends Controller
         return view('profile', array('user' => $user));
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
 
-    public function showChangePasswordForm(){
+    public function showChangePasswordForm()
+    {
         return view('auth.changepassword');
     }
 
-    public function changePassword(Request $request){
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function changePassword(Request $request)
+    {
         $user = Auth::user();
         $newPasswordHash = bcrypt(request('password'));
         $user->password = $newPasswordHash;
         $this->validate(request(), [
-            'password'=>'required',
+            'password' => 'required',
         ]);
 
         $user->save();

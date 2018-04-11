@@ -10,12 +10,18 @@ use Mail;
 
 class MessageController extends Controller
 {
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
         $messages = Message::paginate(5);
         return view('messages_customer', array('messages' => $messages));
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function messageForm()
     {
         $user = Auth::user();
@@ -24,6 +30,10 @@ class MessageController extends Controller
         return view('messages_form', array('email' => $email));
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function messageSent(Request $request)
     {
         $message = New Message();
@@ -35,6 +45,9 @@ class MessageController extends Controller
         return redirect()->route('messages_customer');
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function adminIndex()
     {
         $messages = Message::paginate(5);
@@ -42,12 +55,21 @@ class MessageController extends Controller
         return view('admin_messages_page', array('messages' => $messages));
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function adminAnswerForm($id)
     {
         $message = Message::find($id);
         return view('admin_answer_form', ['message' => $message]);
     }
 
+    /**
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function adminAnswerSend(Request $request, $id)
     {
         $to = Message::find($id);
