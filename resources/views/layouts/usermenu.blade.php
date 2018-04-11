@@ -8,4 +8,7 @@
     <li class="nav-item">
         <a class="nav-link" href="{{ route('my_orders_customer') }}">My Orders</a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('messages_customer') }}">My Messages</a>
+    </li>
 </ul>

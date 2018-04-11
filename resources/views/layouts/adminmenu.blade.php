@@ -14,4 +14,7 @@
     <li class="nav-item">
         <a class="nav-link" href="{{route('admin_page_orders')}}">Orders</a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{route('admin_messages_page')}}">Messages</a>
+    </li>
 </ul>

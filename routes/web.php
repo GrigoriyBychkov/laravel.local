@@ -33,6 +33,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/basket', 'ShoppingCart@acceptOrder')->name('accept_order');
     Route::get('/delete/order/{id}', 'ShoppingCart@orderDelete')->name('order_delete');
     Route::get('/my_orders', 'HomeController@myOrders')->name('my_orders_customer');
+    Route::get('/my_messages', 'MessageController@index')->name('messages_customer');
+    Route::get('/my_messages/sent/', 'MessageController@messageForm')->name('send_message');
+    Route::post('/my_messages/sent/', 'MessageController@messageSent')->name('send_message_confirm');
 });
 
 Route::prefix('admin')->group(function () {
@@ -51,6 +54,9 @@ Route::prefix('admin')->group(function () {
         Route::resource('categories', 'CategoryController');
         Route::resource('product', 'ProductController', ['except' => ['show']]);
         Route::get('/orders', 'HomeController@adminPageOrders')->name('admin_page_orders');
+        Route::get('/messages', 'MessageController@adminIndex')->name('admin_messages_page');
+        Route::get('/message/answer/{id}', 'MessageController@adminAnswerForm')->name('email_answer_form');
+        Route::post('/message/answer/{id}', 'MessageController@adminAnswerSend')->name('email_answer_send');
     });
 });
 
