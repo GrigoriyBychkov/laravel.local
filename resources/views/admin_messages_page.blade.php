@@ -5,6 +5,8 @@
             <div class="col-md-8 col-md-offset-2">
                 @include('layouts.adminmenu')
                 <h3>Messages</h3>
+                <a class="btn btn-primary" href="{{ route('notification_form') }}">Add Notification</a>
+
                 <table class="table">
                     <thead class="thead-light">
                     <tr>

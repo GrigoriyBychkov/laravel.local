@@ -9,10 +9,20 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Contracts\Auth\CanResetPassword;
 use Auth;
 
+
 class User extends Authenticatable
 {
     use SoftDeletes;
     use Notifiable;
+
+    public function userNotifications()
+    {
+        $user = User::find(1);
+
+        foreach ($user->notifications as $notification) {
+            echo $notification->type;
+        }
+    }
 
     /**
      * The attributes that are mass assignable.
@@ -31,15 +41,6 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-//    public function is_admin()
-//    {
-//        $role = $this->role;
-//        if($role == '1')
-//        {
-//            return true;
-//        }
-//        return false;
-//    }
 
     protected $dates = ['deleted_at'];
 

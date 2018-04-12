@@ -39,27 +39,33 @@ class ShoppingCart extends Controller
         return redirect()->back()->with('success', 'product added to cart');
     }
 
+
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function basket()
     {
         $orders = Session::get('order');
-        $products = Product::whereIn('id', array_keys($orders))->get()->keyBy('id');
+        if($orders != null)
+        {
+            $products = Product::whereIn('id', array_keys($orders))->get()->keyBy('id');
 
-        $cartProducts = [];
-        $total = 0;
+            $cartProducts = [];
+            $total = 0;
 
-        foreach ($orders as $product_id => $quantity) {
-            $cartProducts [] = [
-                'price' => $products[$product_id]->price,
-                'quantity' => $quantity,
-                'product' => $products[$product_id],
-            ];
-            $total += $products[$product_id]->price * $quantity;
+            foreach ($orders as $product_id => $quantity) {
+                $cartProducts [] = [
+                    'price' => $products[$product_id]->price,
+                    'quantity' => $quantity,
+                    'product' => $products[$product_id],
+                ];
+                $total += $products[$product_id]->price * $quantity;
+            }
+        } else {
+            $cartProducts = [];
+            $total = 0;
         }
+
 
         return view('basket', array('cartProducts' => $cartProducts, 'total' => $total));
     }
@@ -100,6 +106,5 @@ class ShoppingCart extends Controller
         }
         Session::put('order', []);
         return redirect()->route('home');
-
     }
 }

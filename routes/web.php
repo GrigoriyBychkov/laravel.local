@@ -1,7 +1,5 @@
 <?php
 
-use App\Category;
-use App\Product;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +34,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/my_messages', 'MessageController@index')->name('messages_customer');
     Route::get('/my_messages/sent/', 'MessageController@messageForm')->name('send_message');
     Route::post('/my_messages/sent/', 'MessageController@messageSent')->name('send_message_confirm');
+    Route::get('/new_notification', 'MessageController@')->name('notification_show');
 });
 
 Route::prefix('admin')->group(function () {
@@ -57,6 +56,8 @@ Route::prefix('admin')->group(function () {
         Route::get('/messages', 'MessageController@adminIndex')->name('admin_messages_page');
         Route::get('/message/answer/{id}', 'MessageController@adminAnswerForm')->name('email_answer_form');
         Route::post('/message/answer/{id}', 'MessageController@adminAnswerSend')->name('email_answer_send');
+        Route::get('/notifications', 'MessageController@notificationIndex')->name('notification_form');
+        Route::post('/notifications', 'MessageController@notificationStore')->name('notification_store');
     });
 });
 

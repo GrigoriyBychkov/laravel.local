@@ -7,9 +7,15 @@ use Illuminate\Http\Request;
 use App\Message;
 use Illuminate\Support\Facades\Auth;
 use Mail;
+use App\User;
+use App\Notifications\AdminNotifications;
+use Illuminate\Notifications\Notifiable;
+
 
 class MessageController extends Controller
 {
+    use Notifiable;
+
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -79,4 +85,24 @@ class MessageController extends Controller
         });
         return redirect()->back()->with('success', 'Answer Was Sent');
     }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function notificationIndex()
+    {
+        return view('notification_form');
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function notificationStore(Request $request)
+    {
+        $notification = $request->notification;
+        \Notification::send(User::all(), new AdminNotifications($notification));
+        return redirect()->back()->with('success', 'Notification Was Added');
+    }
+
 }
