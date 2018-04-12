@@ -27,7 +27,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/goods/{category_id?}', 'HomeController@showGoods')->name('goods_show_customer');
     Route::get('/goods/show/{id}', 'ShoppingCart@productShow')->name('show_product');
     Route::post('/goods/show/{id}', 'ShoppingCart@productOrder')->name('product.order');
-    Route::get('/basket', 'ShoppingCart@basket')->name('basket');
+    Route::get('/basket', 'ShoppingCart@showBasket')->name('basket');
     Route::post('/basket', 'ShoppingCart@acceptOrder')->name('accept_order');
     Route::get('/delete/order/{id}', 'ShoppingCart@orderDelete')->name('order_delete');
     Route::get('/my_orders', 'HomeController@myOrders')->name('my_orders_customer');
@@ -52,6 +52,8 @@ Route::prefix('admin')->group(function () {
         Route::resource('news', 'NewsController');
         Route::resource('categories', 'CategoryController');
         Route::resource('product', 'ProductController', ['except' => ['show']]);
+        Route::get('/product/add_from_csv', 'ProductController@uploadForm')->name('upload_product_csv');
+        Route::post('/product/add_from_csv', 'ProductController@uploadFormConfirm')->name('upload_product_csv_confirm');
         Route::get('/orders', 'HomeController@adminPageOrders')->name('admin_page_orders');
         Route::get('/messages', 'MessageController@adminIndex')->name('admin_messages_page');
         Route::get('/message/answer/{id}', 'MessageController@adminAnswerForm')->name('email_answer_form');

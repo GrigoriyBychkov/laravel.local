@@ -43,7 +43,7 @@ class ShoppingCart extends Controller
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function basket()
+    public function showBasket()
     {
         $orders = Session::get('order');
         if($orders != null)

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserControllerRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
@@ -89,30 +90,19 @@ class UserController extends Controller
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
-    public function add(Request $request)
+    public function add(UserControllerRequest $request)
     {
         $user = new User();
-        if (request('name')) {
-            $result = $this->validate(request(), [
-                'name' => 'required|string|max:255',
-                'email' => 'required|string|email|max:255|unique:users',
-                'password' => 'required|string|min:6|confirmed',
-            ]);
-            $user->email = request('email');
-            $user->name = request('name');
-            $user->role = request('role');
-            $user->password = bcrypt(request('password'));
+
+        $user->email = request('email');
+        $user->name = request('name');
+        $user->role = request('role');
+        $user->password = bcrypt(request('password'));
+
+        $user->save();
 
 
-            if ($result) {
-                $user->save();
-            } else {
-                return view('useradd', array('user' => $user))->withInput();
-            }
+        return redirect()->back()->with('success', 'The user has added');
 
-
-            return redirect()->back()->with('success', 'The user has added');
-        }
-        return view('useradd');
     }
 }

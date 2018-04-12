@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductRequest;
 use App\Product;
 use Illuminate\Http\Request;
 use App\Category;
@@ -37,7 +38,7 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
         $product = New Product();
 
@@ -98,7 +99,7 @@ class ProductController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ProductRequest $request, $id)
     {
         $product = Product::find($id);
         $product->name = request('name');
@@ -123,5 +124,27 @@ class ProductController extends Controller
         $product->delete();
 
         return redirect()->route('product.index');
+    }
+
+    public function uploadForm()
+    {
+        $categories = Category::all();
+
+        return view('upload_product_csv', ['categories' => $categories]);
+    }
+
+    public function uploadFormConfirm(ProductRequest $request)
+    {
+        $file = $request->file('file');
+        $csv = array_map('str_getcsv', file($file[0]));
+        foreach ($csv as $key => $value) {
+            $product = New Product();
+            $product->category_id = request('category_id');
+            $product->name = $value[0];
+            $product->description = $value[1];
+            $product->price = $value[2];
+            $product->save();
+        }
+        return redirect()->back()->with('success', 'Products Were Uploaded');
     }
 }

@@ -32,8 +32,6 @@ class ProfileController extends Controller
     public function profileUpdate(Request $request)
     {
         $user = Auth::user();
-        var_dump($user->name);
-        var_dump($user->email);
         if (request('name') || request('email')) {
             $this->validate(request(), [
                 'name' => 'required',

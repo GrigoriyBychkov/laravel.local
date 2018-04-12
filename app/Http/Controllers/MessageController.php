@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\MessageRequest;
 use Illuminate\Http\Request;
 //use Illuminate\Mail\Message;
 use App\Message;
@@ -40,7 +41,7 @@ class MessageController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function messageSent(Request $request)
+    public function messageSent(MessageRequest $request)
     {
         $message = New Message();
 
