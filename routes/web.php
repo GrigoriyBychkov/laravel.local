@@ -52,8 +52,8 @@ Route::prefix('admin')->group(function () {
         Route::resource('news', 'NewsController');
         Route::resource('categories', 'CategoryController');
         Route::resource('product', 'ProductController', ['except' => ['show']]);
-        Route::get('/product/add_from_csv', 'ProductController@uploadForm')->name('upload_product_csv');
-        Route::post('/product/add_from_csv', 'ProductController@uploadFormConfirm')->name('upload_product_csv_confirm');
+        Route::get('/product/add_from_file', 'ProductController@uploadForm')->name('upload_product_file');
+        Route::post('/product/add_from_file', 'ProductController@uploadFormConfirm')->name('upload_product_file_confirm');
         Route::get('/orders', 'HomeController@adminPageOrders')->name('admin_page_orders');
         Route::get('/messages', 'MessageController@adminIndex')->name('admin_messages_page');
         Route::get('/message/answer/{id}', 'MessageController@adminAnswerForm')->name('email_answer_form');

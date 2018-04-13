@@ -5,7 +5,7 @@
             <div class="col-md-8 col-md-offset-2">
                 @include('layouts.adminmenu')
                 <a class="btn btn-primary" href="{{ route('product.create') }}">Add Products</a>
-                <a class="btn btn-primary" href="{{route('upload_product_csv')}}">Upload product via .CSV</a>
+                <a class="btn btn-primary" href="{{route('upload_product_file')}}">Upload Product Via File</a>
                 <h3>Products</h3>
                 <table class="table">
                     <thead class="thead-light">

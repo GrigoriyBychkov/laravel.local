@@ -130,21 +130,54 @@ class ProductController extends Controller
     {
         $categories = Category::all();
 
-        return view('upload_product_csv', ['categories' => $categories]);
+        return view('upload_product_file', ['categories' => $categories]);
     }
 
-    public function uploadFormConfirm(ProductRequest $request)
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function uploadFormConfirm(Request $request)
     {
         $file = $request->file('file');
-        $csv = array_map('str_getcsv', file($file[0]));
+        $ext = $file->getClientOriginalExtension();
+        $category = request('category_id');
+        if ($ext == "xml") {
+            self::addProductsFromXml($file, $category);
+        } elseif ($ext == "csv") {
+            self::addProductsFromCsv($file, $category);
+        }
+
+        return redirect()->back()->with('success', 'Products Were Uploaded');
+    }
+
+    public function addProductsFromXml($file, $category)
+    {
+        $xml = simplexml_load_file($file);
+
+        foreach ($xml->product as $key => $value) {
+            $product = New Product();
+            $product->category_id = $category;
+            $product->name = $value->name;
+            $product->description = $value->description;
+            $product->price = $value->price;
+            $product->save();
+        }
+    }
+
+    public function addProductsFromCsv($file, $category)
+    {
+        $csv = array_map('str_getcsv', file($file));
+
         foreach ($csv as $key => $value) {
             $product = New Product();
-            $product->category_id = request('category_id');
+            $product->category_id = $category;
             $product->name = $value[0];
             $product->description = $value[1];
             $product->price = $value[2];
             $product->save();
         }
-        return redirect()->back()->with('success', 'Products Were Uploaded');
     }
+
 }

@@ -17,7 +17,7 @@
                             </ul>
                         </div>
                     @endif
-                    <form method="post" action="{{route('upload_product_csv_confirm')}}" >
+                    <form method="post" action="{{route('upload_product_file_confirm')}}" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         {{ method_field('post') }}
 
